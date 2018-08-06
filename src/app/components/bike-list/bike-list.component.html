@@ -1,0 +1,39 @@
+<div>
+  <nav class="navbar navbar-dark bg-light sticky-top">
+    <ul class="navbar-nav d-flex flex-row w-100 justify-content-between">
+      <li class="nav-item w-50">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text text-primary border-primary"><i class="fa fa-search"></i> </span>
+          </div>
+          <input type="text" class="form-control border-primary" [(ngModel)]="query"
+                 placeholder="Search by name or company name">
+        </div>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-outline-primary" routerLink="/create">
+          <i class="fa fa-lg fa-plus"></i><span class="d-none d-sm-none d-md-inline-block ml-2">Add New</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 mt-3" *ngFor="let bike of bikes | search:'name,company':query">
+      <div class="card">
+        <div class="p-2">
+          <img class="card-img-top" alt="{{bike.company + ' ' + bike.name}}"
+               [src]="'data:image/jpeg;base64,'+ bike.image">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{bike.name}}</h5>
+          <p class="card-text"><strong>Company:</strong> {{bike.company}}</p>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-primary"><i class="fa fa-eye mr-2"></i>View</button>
+            <button class="btn btn-danger"
+            (click)="onDelete(bike)"><i class="fa fa-trash-o mr-2"></i>Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
