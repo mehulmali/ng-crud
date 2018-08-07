@@ -1,30 +1,23 @@
 import {Component, OnInit} from '@angular/core';
-import {BikeConstant} from '../../../assets/json/bike.constant';
 import {Bike} from '../../shared/interfaces/bike';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.scss']
 })
-export class CreateComponent implements OnInit {
-
+export class EditComponent implements OnInit {
   companies: any;
   selectedCompany: any;
   bike: Bike;
   bikes: any;
   imageError: string;
-  isCreating: boolean;
+  isUpdating: boolean;
 
-  constructor(private _router: Router) {
-    const d = new Date();
-    this.bike = {
-      id: d.getTime(),
-      name: '',
-      company: '',
-      image: ''
-    };
+  constructor(private _router: Router, private route: ActivatedRoute) {
+    this.bikes = JSON.parse(localStorage.getItem('BIKEDATA'));
     this.companies = [
       {id: 0, label: 'select company'},
       {id: 1, label: 'suzuki'},
@@ -35,7 +28,6 @@ export class CreateComponent implements OnInit {
       {id: 6, label: 'tvs'},
       {id: 7, label: 'others'},
     ];
-    this.selectedCompany = this.companies[0];
   }
 
   onSelect() {
@@ -71,21 +63,30 @@ export class CreateComponent implements OnInit {
   }
 
   onSubmit(bike) {
-    this.isCreating = true;
+    this.isUpdating = true;
     if (!bike.image) {
       this.imageError = 'Please choose a image.';
       return false;
     }
 
-    this.bikes.push(this.bike);
+    _.find(this.bikes, function (bikeObj) {
+      if (bikeObj.id === bike.id) {
+        bikeObj = bike;
+      }
+    });
+
     localStorage.setItem('BIKEDATA', JSON.stringify(this.bikes));
     this._router.navigate(['bikes']);
   }
 
   ngOnInit() {
-    this.bikes = [];
-    if (localStorage.getItem('BIKEDATA')) {
-      this.bikes = JSON.parse(localStorage.getItem('BIKEDATA'));
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.bike = _.find(this.bikes, {'id': id});
+    if (this.bike) {
+      this.selectedCompany = _.find(this.companies, {'label': this.bike.company});
+      if (!this.selectedCompany) {
+        this.selectedCompany = this.companies[this.companies.length - 1];
+      }
     }
   }
 

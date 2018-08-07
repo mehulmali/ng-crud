@@ -28,9 +28,11 @@
           <h5 class="card-title">{{bike.name}}</h5>
           <p class="card-text"><strong>Company:</strong> {{bike.company}}</p>
           <div class="d-flex justify-content-between">
-            <button class="btn btn-primary"><i class="fa fa-eye mr-2"></i>View</button>
+            <button class="btn btn-primary" [routerLink]="'/edit/' + bike.id"><i class="fa fa-edit mr-2"></i>Edit
+            </button>
             <button class="btn btn-danger"
-            (click)="onDelete(bike)"><i class="fa fa-trash-o mr-2"></i>Delete</button>
+                    (click)="onDelete(bike)"><i class="fa fa-trash-o mr-2"></i>Delete
+            </button>
           </div>
         </div>
       </div>

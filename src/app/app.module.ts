@@ -9,6 +9,7 @@ import { CreateComponent } from './components/create/create.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { SearchPipe } from './shared/pipes/search.pipe';
 import {FormsModule} from '@angular/forms';
+import { EditComponent } from './components/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {FormsModule} from '@angular/forms';
     BikeListComponent,
     CreateComponent,
     PageNotFoundComponent,
-    SearchPipe
+    SearchPipe,
+    EditComponent
   ],
   imports: [
     BrowserModule,

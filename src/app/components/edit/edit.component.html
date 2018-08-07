@@ -1,0 +1,62 @@
+<div class="card p-3">
+  <h5>Create New Bike</h5>
+  <hr/>
+  <div class="row">
+    <div class="col-12 d-flex">
+      <div class="image-preview d-flex" *ngIf="!bike.image">
+        <div class="flex-column mx-auto my-auto text-center">
+          <i class="fa fa-image fa-3x"></i>
+          <div>
+            <small>Image preview</small>
+          </div>
+        </div>
+      </div>
+      <img id="img" [src]="'data:image/jpeg;base64,'+ bike.image" *ngIf="bike.image">
+      <div class="flex-column my-auto ml-3">
+        <label class="btn btn-outline-primary" for="my-file-selector">
+          <input id="my-file-selector" type="file" style="display:none;" (change)="onChange($event)">
+          Choose Image
+        </label>
+        <div *ngIf="imageError">
+          <small class="text-danger"> {{imageError}}</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mt-2">
+      <form #bikeForm="ngForm" (ngSubmit)="onSubmit(bike)">
+        <div class="form-group">
+          <label for="name"><span class="text-danger">*</span> Bike name</label>
+          <input type="text" class="form-control" id="name" name="name"
+                 placeholder="Enter bike name" required [(ngModel)]="bike.name" #name="ngModel">
+          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+            <small *ngIf="name?.errors.required"> Please enter name.</small>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="companies.length">
+          <label for="companySelect"><span class="text-danger">*</span> Select company:</label>
+          <select class="form-control" name="select" id="companySelect" [(ngModel)]="selectedCompany"
+                  (change)="onSelect()" #select="ngModel">
+            <option *ngFor="let company of companies" [ngValue]="company">{{company.label}}</option>
+          </select>
+          <div *ngIf="!selectedCompany.id && (select.dirty || select.touched)" class="text-danger">
+            <small> Please select company.</small>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="selectedCompany.id === (companies.length - 1)">
+          <label for="company"><span class="text-danger">*</span> Company name</label>
+          <input type="text" class="form-control" id="company" name="company"
+                 placeholder="Enter company name for bike" required [(ngModel)]="bike.company" #company="ngModel">
+          <div *ngIf="company.invalid && (company.dirty || company.touched)" class="text-danger">
+            <small *ngIf="company?.errors.required"> Please enter company name.</small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-danger pull-right ml-3" routerLink="/bikes">Cancel</button>
+        <button type="submit" class="btn btn-primary pull-right" [disabled]="bikeForm.invalid || !selectedCompany.id || isUpdating">
+          <span *ngIf="!isUpdating">Update</span>
+          <i class="fa fa-spinner fa-pulse" *ngIf="isUpdating"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
