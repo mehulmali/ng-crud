@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Bike} from '../../shared/interfaces/bike';
 import {BikeConstant} from '../../../assets/json/bike.constant';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-bike-list',
@@ -12,6 +13,11 @@ export class BikeListComponent implements OnInit {
   bikes: Bike[];
   query: string;
 
+  signin = new FormGroup({
+    email: new FormControl(null, Validators.required),
+    password: new FormControl(null, Validators.required),
+    captcha: new FormControl(),
+  });
   constructor() {
     // if localstorage not found then set localstorage with 'BIKEDATA' key
     if (!localStorage.getItem('BIKEDATA')) {

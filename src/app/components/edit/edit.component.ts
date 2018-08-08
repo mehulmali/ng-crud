@@ -87,6 +87,8 @@ export class EditComponent implements OnInit {
       if (!this.selectedCompany) {
         this.selectedCompany = this.companies[this.companies.length - 1];
       }
+    } else {
+      this._router.navigate(['404']);
     }
   }
 
