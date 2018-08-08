@@ -13,11 +13,16 @@ export class BikeListComponent implements OnInit {
   bikes: Bike[];
   query: string;
 
+  size = 'normal';
+  lang = 'en';
+  theme = 'light';
+
   signin = new FormGroup({
     email: new FormControl(null, Validators.required),
     password: new FormControl(null, Validators.required),
     captcha: new FormControl(),
   });
+
   constructor() {
     // if localstorage not found then set localstorage with 'BIKEDATA' key
     if (!localStorage.getItem('BIKEDATA')) {
@@ -26,6 +31,18 @@ export class BikeListComponent implements OnInit {
 
     // Set localstorage data
     this.bikes = JSON.parse(localStorage.getItem('BIKEDATA'));
+  }
+
+  handleExpire() {
+    console.log('expire');
+  }
+
+  handleLoad() {
+    console.log('load');
+  }
+
+  handleSuccess(e) {
+    console.log('success', e);
   }
 
   onDelete(bikeObj) {
