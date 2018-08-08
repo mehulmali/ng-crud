@@ -10,7 +10,6 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { SearchPipe } from './shared/pipes/search.pipe';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EditComponent } from './components/edit/edit.component';
-import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
   declarations: [
@@ -26,8 +25,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgxCaptchaModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
